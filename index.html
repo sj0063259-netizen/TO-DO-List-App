@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ice">
+    <h1>Todo List</h1>
+  </div>
+
+  <div class="pic">
+    <input type="text" id="taskInput" placeholder="Enter task">
+    <input type="date" id="taskDate">
+    <button id="addBtn" type="button">Add Task</button>
+    <button id="clearCompleted" type="button">Clear Completed</button>
+    <p id="taskCount">Tasks: 0</p>
+
+    <!-- Filter bar -->
+    <div class="filters">
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="active">Active</button>
+      <button data-filter="completed">Completed</button>
+    </div>
+
+    <!-- Sort bar -->
+    <div class="sort">
+      <button id="sortByDate">Sort by Due Date</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+  <p id="taskCount">Tasks: 0</p>
+<div class="progress-container">
+  <div id="progressBar"></div>
+</div>
+<ul id="taskList"></ul>
+
+  <script src="index.js"></script>
+</body>
+</html>

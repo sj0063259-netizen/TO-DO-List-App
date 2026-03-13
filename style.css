@@ -1,0 +1,150 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f8fafc;
+}
+
+.ice {
+  font-size: 32px;
+  text-align: center;
+  background: linear-gradient(90deg, #fff, #000080);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  margin-bottom: 20px;
+}
+
+.pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: auto;
+}
+
+#taskInput, #taskDate {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 90%;
+  height: 45px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  background: linear-gradient(135deg, #008080, #004040);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.filters, .sort {
+  margin: 10px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filters button.active {
+  background: #008080;
+  color: white;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+  width: 100%;
+}
+
+li:hover {
+  background: #f0f0f0;
+}
+
+li button {
+  background: crimson;
+  color: white;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #888;
+  font-style: italic;
+}
+
+.date {
+  font-size: 14px;
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Color-coded deadlines */
+.date.overdue {
+  background: #ff4d4d;
+  color: white;
+}
+.date.today {
+  background: #ffa500;
+  color: white;
+}
+.date.upcoming {
+  background: #4caf50;
+  color: white;
+}
+.progress-container {
+  width: 90%;
+  background: #ddd;
+  border-radius: 8px;
+  margin: 10px auto;
+  height: 20px;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(135deg, #4caf50, #008080);
+  transition: width 0.3s ease;
+}
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  #taskInput, #taskDate {
+    width: 100%;
+    font-size: 16px;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .date {
+    margin-left: 0;
+  }
+}
