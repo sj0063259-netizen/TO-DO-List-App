@@ -1,13 +1,16 @@
+// Grab elements
 const input = document.getElementById("taskInput");
 const dateInput = document.getElementById("taskDate");
 const list = document.getElementById("taskList");
-const button = document.getElementById("addBtn");
+const addBtn = document.getElementById("addBtn");
 const taskCount = document.getElementById("taskCount");
 const clearBtn = document.getElementById("clearCompleted");
 const filterButtons = document.querySelectorAll(".filters button");
 const sortBtn = document.getElementById("sortByDate");
 const progressBar = document.getElementById("progressBar");
+const progresscount = document.getElementById("progresscount");
 
+// ------------------ Task Count & Progress ------------------
 function updateTaskCount() {
   const total = list.children.length;
   const completed = [...list.children].filter(li =>
@@ -16,26 +19,34 @@ function updateTaskCount() {
 
   taskCount.innerText = `Tasks: ${total} (Completed: ${completed})`;
 
-  // Update progress bar
   const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
   progressBar.style.width = percent + "%";
+  progresscount.innerText = `Progress: ${percent}%`;
 }
 
+// ------------------ Deadline Labels ------------------
 function setDeadlineColor(dateSpan, dueDate) {
   if (!dueDate) return;
   const today = new Date().toISOString().split("T")[0];
+  const diffDays = Math.floor((new Date(dueDate) - new Date(today)) / (1000 * 60 * 60 * 24));
+
   if (dueDate < today) {
     dateSpan.classList.add("overdue");
+    dateSpan.innerText = `Overdue by ${Math.abs(diffDays)} day(s)`;
   } else if (dueDate === today) {
     dateSpan.classList.add("today");
+    dateSpan.innerText = "Due today";
   } else {
     dateSpan.classList.add("upcoming");
+    dateSpan.innerText = `Due in ${diffDays} day(s)`;
   }
 }
 
+// ------------------ Create Task ------------------
 function createTask(taskText, completed = false, dueDate = "") {
   const li = document.createElement("li");
 
+  // Checkbox
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = completed;
@@ -47,14 +58,38 @@ function createTask(taskText, completed = false, dueDate = "") {
     updateTaskCount();
   });
 
+  // Task text
   const span = document.createElement("span");
   span.innerText = taskText;
 
+  // Inline editing
+  span.addEventListener("dblclick", () => {
+    const editInput = document.createElement("input");
+    editInput.type = "text";
+    editInput.value = span.innerText;
+    editInput.className = "edit-input";
+
+    li.replaceChild(editInput, span);
+    editInput.focus();
+
+    editInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") finishEdit();
+    });
+    editInput.addEventListener("blur", finishEdit);
+
+    function finishEdit() {
+      span.innerText = editInput.value.trim() || taskText;
+      li.replaceChild(span, editInput);
+      saveTasks();
+    }
+  });
+
+  // Deadline
   const dateSpan = document.createElement("span");
   dateSpan.className = "date";
-  dateSpan.innerText = dueDate ? `Due: ${dueDate}` : "";
-  setDeadlineColor(dateSpan, dueDate);
+  if (dueDate) setDeadlineColor(dateSpan, dueDate);
 
+  // Delete button
   const deleteBtn = document.createElement("button");
   deleteBtn.innerText = "Delete";
   deleteBtn.addEventListener("click", () => {
@@ -63,6 +98,7 @@ function createTask(taskText, completed = false, dueDate = "") {
     saveTasks();
   });
 
+  // Append
   li.appendChild(checkbox);
   li.appendChild(span);
   li.appendChild(dateSpan);
@@ -72,6 +108,7 @@ function createTask(taskText, completed = false, dueDate = "") {
   updateTaskCount();
 }
 
+// ------------------ Add Task ------------------
 function addTask() {
   const taskText = input.value.trim();
   const dueDate = dateInput.value;
@@ -85,6 +122,7 @@ function addTask() {
   saveTasks();
 }
 
+// ------------------ Save & Load ------------------
 function saveTasks() {
   let tasks = [];
   document.querySelectorAll("#taskList li").forEach(li => {
@@ -94,7 +132,7 @@ function saveTasks() {
     tasks.push({
       text: span.innerText,
       completed: checkbox.checked,
-      dueDate: dateSpan.innerText.replace("Due: ", "")
+      dueDate: dateInput.value || ""
     });
   });
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -107,6 +145,7 @@ function loadTasks() {
   });
 }
 
+// ------------------ Filters ------------------
 function applyFilter(filter) {
   document.querySelectorAll("#taskList li").forEach(li => {
     const checkbox = li.querySelector("input[type='checkbox']");
@@ -120,6 +159,7 @@ function applyFilter(filter) {
   });
 }
 
+// ------------------ Sort ------------------
 function sortByDate() {
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   tasks.sort((a, b) => {
@@ -132,20 +172,16 @@ function sortByDate() {
   saveTasks();
 }
 
-// Event listeners
-button.addEventListener("click", addTask);
+// ------------------ Event Listeners ------------------
+addBtn.addEventListener("click", addTask);
 input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    addTask();
-  }
+  if (e.key === "Enter") addTask();
 });
 
 clearBtn.addEventListener("click", () => {
   document.querySelectorAll("#taskList li").forEach(li => {
     const checkbox = li.querySelector("input[type='checkbox']");
-    if (checkbox.checked) {
-      li.remove();
-    }
+    if (checkbox.checked) li.remove();
   });
   updateTaskCount();
   saveTasks();
@@ -161,5 +197,5 @@ filterButtons.forEach(btn => {
 
 sortBtn.addEventListener("click", sortByDate);
 
-// Initialize
+// ------------------ Initialize ------------------
 loadTasks();

@@ -1,13 +1,32 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background: #f8fafc;
+  background: linear-gradient(135deg, #1e3c72, #2a5298); /* deep blue gradient */
+  color: #f0f0f0; /* light text for contrast */
 }
 
+button {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* warm orange-pink gradient */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
 .ice {
   font-size: 32px;
   text-align: center;
-  background: linear-gradient(90deg, #fff, #000080);
+  background: linear-gradient(90deg,#f0f0f0);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   margin-bottom: 20px;
@@ -34,25 +53,6 @@ body {
   box-sizing: border-box;
 }
 
-button {
-  background: linear-gradient(135deg, #008080, #004040);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-}
-
-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
 .filters, .sort {
   margin: 10px 0;
   display: flex;
@@ -70,16 +70,23 @@ li {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 5px 0;
-  padding: 5px;
-  border-radius: 6px;
-  transition: background 0.2s ease;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
   width: 100%;
+  color: #f0f0f0;
+  box-sizing: border-box; /* ✅ prevents overflow */
 }
 
+/* Hover effect */
 li:hover {
-  background: #f0f0f0;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
+
 
 li button {
   background: crimson;
@@ -115,6 +122,7 @@ li button {
   background: #4caf50;
   color: white;
 }
+
 .progress-container {
   width: 90%;
   background: #ddd;
@@ -130,6 +138,16 @@ li button {
   background: linear-gradient(135deg, #4caf50, #008080);
   transition: width 0.3s ease;
 }
+
+/* Inline edit input */
+.edit-input {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   #taskInput, #taskDate {
@@ -144,7 +162,22 @@ li button {
     flex-direction: column;
     align-items: flex-start;
   }
-  .date {
-    margin-left: 0;
+   li {
+    flex-direction: column;   /* stack content vertically */
+    align-items: flex-start;  /* align to left */
+    padding: 10px;
+    font-size: 14px;
   }
+
+  li button {
+    width: 100%;              /* buttons take full width */
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .date {
+    margin-left: 0;           /* prevent pushing off screen */
+    font-size: 12px;
+  }
+
 }

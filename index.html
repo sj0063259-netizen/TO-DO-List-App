@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
 </head>
-<body>
+<link rel="stylesheet" href="style.css">
+  <body>
   <div class="ice">
     <h1>To-Do List</h1>
   </div>
@@ -17,27 +17,27 @@
     <button id="addBtn" type="button">Add Task</button>
     <button id="clearCompleted" type="button">Clear Completed</button>
     <p id="taskCount">Tasks: 0</p>
-
-    <!-- Filter bar -->
-    <div class="filters">
-      <button data-filter="all" class="active">All</button>
-      <button data-filter="active">Active</button>
-      <button data-filter="completed">Completed</button>
-    </div>
-
-    <!-- Sort bar -->
-    <div class="sort">
-      <button id="sortByDate">Sort by Due Date</button>
-    </div>
-
-    <ul id="taskList"></ul>
   </div>
-  <p id="taskCount">Tasks: 0</p>
-<div class="progress-container">
-  <div id="progressBar"></div>
-</div>
-<ul id="taskList"></ul>
 
+  <!-- Filter bar -->
+  <div class="filters">
+    <button data-filter="all" >All</button>
+    <button data-filter="active">Active</button>
+    <button data-filter="completed">Completed</button>
+  </div>
+
+  <!-- Sort bar -->
+  <div class="sort">
+    <button id="sortByDate">Sort by Due Date</button>
+  </div>
+
+  <!-- ✅ Only one task list -->
+  <ul id="taskList"></ul>
+
+  <p id="progresscount">Progress: 0%</p>
+  <div class="progress-container">
+    <div id="progressBar"></div>
+  </div>
   <script src="index.js"></script>
 </body>
 </html>
